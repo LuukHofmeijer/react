@@ -1,3 +1,8 @@
+Hoihoi
+Om dit te editen met een preview kan je in snack.expo.io de link van de repo plakken.
+--> https://github.com/LuukHofmeijer/react.git
+
+
 # Sample Snack app
 
 Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by clicking the **Run** button or use the simulator by clicking **Tap to Play**. When you're done, click **Save** and share the link!
