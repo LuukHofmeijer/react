@@ -1,91 +1,56 @@
+// Import alle nodige onderdelen van react
 import * as React from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
-import Constants from 'expo-constants';
-
-// You can import from local files
-import AssetExample from './components/AssetExample';
-
-// or any pure javascript modules available in npm
-import { Card } from 'react-native-paper';
-
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// hierin komen de verschillende stack.screen te staan
+// Import eigen files binnen het project
+import styles from './components/stylesheet';
+import mainTheme from "./components/mainTheme";
+
+// Hierin staan alle schermen verzameld
 const Stack = createStackNavigator();
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={mainTheme}>
       <Stack.Navigator>
+
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{ title: 'Het Assink AT-uren' }}
         />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+
+        <Stack.Screen 
+          name="Code" 
+          component={CodeScreen} 
+          options={{ title: 'Voer de code in'}}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-const OldApp  = () => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <NavigationContainer>
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>
-        Lorem
-      </Text>
-      <Card>
-        <AssetExample />
-      </Card>
-      <Button
-      title="Go to Jane's profile"
+    <View style={styles.view}>
+    <Button
+      title="Scan nieuw uur"
+      color="orange"
       onPress={() =>
-        navigation.navigate('Profile', { name: 'Jane' })
+        navigation.navigate('Code', { name: 'Jane' })
       }
     />
     </View>
-    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  button: {
-    padding: 10,
-    color: "#ff0000"
-  }
-});
-
-const HomeScreen = ({ navigation }) => {
+const CodeScreen = ({ navigation, route }) => {
   return (
-    <Button
-      title="Go to Jane's profile"
-      style={styles.button}
-      onPress={() =>
-        navigation.navigate('Profile', { name: 'Jane' })
-      }
-    />
+    <Text>Hier gaan we de code invoeren</Text>
   );
 };
-const ProfileScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profile</Text>;
-};
-
-
-
-
 
 export default App;
+//https://reactnative.dev/docs/
