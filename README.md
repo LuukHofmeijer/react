@@ -1,3 +1,9 @@
+Hoihoi,
+Om te editen: 
+1. ga naar https://snack.expo.io  
+2. klik naast 'project' op de drie puntjes en dan 'Import git repository'  
+3. vul daar de link van deze repo in: https://github.com/LuukHofmeijer/react
+
 # Sample Snack app
 
 Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by clicking the **Run** button or use the simulator by clicking **Tap to Play**. When you're done, click **Save** and share the link!
