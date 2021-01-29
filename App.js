@@ -1,6 +1,6 @@
 // Import alle nodige onderdelen van react
 import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TextInput, SectionList } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -42,15 +42,43 @@ const HomeScreen = ({ navigation }) => {
         navigation.navigate('Code', { name: 'Jane' })
       }
     />
+
+    <SectionList
+      sections={[
+        {title: '01-01-2021', data: ['4', 'Dan', 'Dominic']},
+          {title: '03-01-2021', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
+      ]}
+      renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+      renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+      keyExtractor={(item, index) => index}
+        />
+
     </View>
   );
 };
 
 const CodeScreen = ({ navigation, route }) => {
   return (
-    <Text>Hier gaan we de code invoeren</Text>
+    <View>
+    <TextInput placeholder="type" keyboardType={'numeric'}/>
+    <Button
+      title="Bevestig"
+      
+      buttonStyle={styles.button}
+      onPress={() =>
+        navigation.navigate('Home', { name: 'Jane' })
+      }
+    />
+    <Button
+      title="QR-code"
+      color="orange"
+      onPress={() =>
+        navigation.navigate('Home', { name: 'Jane' })
+      }
+    />
+    </View>
   );
 };
 
 export default App;
-//https://reactnative.dev/docs/
+//https://reactnative.dev/docs/getting-started/

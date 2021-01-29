@@ -1,8 +1,8 @@
 const newTheme = {
   colors: {
-    primary: 'darkorange',
+    primary: 'black',
     background: 'white',
-    card: 'darkorange',
+    card: 'orange',
     text: 'white',
   },
 };

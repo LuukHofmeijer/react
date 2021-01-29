@@ -12,8 +12,11 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 50,
-    backgroundColor: 'orange',
-  },
+      backgroundColor: '#00aeef',
+      borderColor: 'red',
+      borderWidth: 5,
+      borderRadius: 15       
+   },
   view: {
     flex: 1,
     justifyContent: 'center',
