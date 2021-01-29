@@ -16,9 +16,11 @@
     "react-native-web": "~0.13.12",
     "react-native-paper": "3.6.0",
     "react-native-screens": "~2.10.1",
+    "@react-navigation/stack": "*",
     "@react-navigation/native": "^5.7.3",
+    "react-native-safe-area-context": "^0.6.0",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/stack": "*"
+    "webrtc-adapter": "*"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
