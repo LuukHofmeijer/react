@@ -20,7 +20,12 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: 20
+  },
+  image: {
+    width: 50,
+    height: 100,
+    justifyContent: 'center'
   }
 });
 

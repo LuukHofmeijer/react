@@ -1,6 +1,7 @@
 // Import alle nodige onderdelen van react
 import * as React from 'react';
 import {
+  Image,
   Text,
   View,
   StyleSheet,
@@ -16,6 +17,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import styles from './components/stylesheet';
 import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
+import icon from './assets/icon.png'; 
 
 // Hierin staan alle schermen verzameld
 const Stack = createStackNavigator();
@@ -40,6 +42,11 @@ const App = () => {
           component={QRScreen}
           options={{ title: 'Scan qr-code' }}
         />
+          <Stack.Screen
+          name="Plattegrond"
+          component={PlattegrondScreen}
+          options={{ title: 'Plattegrond' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -52,6 +59,11 @@ const HomeScreen = ({ navigation }) => {
         title="Scan nieuw uur"
         color="orange"
         onPress={() => navigation.navigate('Code', { name: 'Jane' })}
+      />
+      <Button
+        title="Plattegrond"
+        color="black"
+        onPress={() => navigation.navigate('Plattegrond', { name: 'Jan' })}
       />
 
       <SectionList
@@ -97,6 +109,15 @@ const CodeScreen = ({ navigation, route }) => {
     </View>
   );
 };
+const PlattegrondScreen = ({ navigation, route }) => {
+  return(
+    <View style={styles.container}>
+      <Image source={icon} style={{ width: 305, height: 159 }} /> 
+
+    </View>
+  )
+}
+
 
 class Test extends React.Component {
 
