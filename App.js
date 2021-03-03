@@ -1,5 +1,6 @@
 // Import alle nodige onderdelen van react
 import * as React from 'react';
+import { useState } from 'react';
 import {
   Image,
   Text,
@@ -42,7 +43,8 @@ const App = () => {
           component={QRScreen}
           options={{ title: 'Scan qr-code' }}
         />
-          <Stack.Screen
+
+        <Stack.Screen
           name="Plattegrond"
           component={PlattegrondScreen}
           options={{ title: 'Plattegrond' }}
@@ -93,13 +95,20 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const CodeScreen = ({ navigation, route }) => {
+const [text, setText] = useState('');
+
   return (
     <View>
-      <TextInput placeholder="type" keyboardType={'numeric'} />
+      <TextInput 
+      placeholder="type" 
+      keyboardType={'numeric'}
+      onChangeText = {text => setText(text)}
+       />
       <Button
         title="Bevestig"
         color="orange"
-        onPress={() => navigation.navigate('Home', { name: 'Jane' })}
+        
+        onPress={() => registerCode(text)}
       />
       <Button
         title="QR-code"
@@ -109,6 +118,7 @@ const CodeScreen = ({ navigation, route }) => {
     </View>
   );
 };
+
 const PlattegrondScreen = ({ navigation, route }) => {
   return(
     <View style={styles.container}>
@@ -156,6 +166,37 @@ const QRScreen = ({ navigation, route }) => {
     </View>
   );
 };
+
+
+
+const registerCode = ( input ) =>{
+		alert(parseInt(input));
+		
+			
+		
+		fetch('https://assinkat.000webhostapp.com/react/register.php', {
+			method: 'post',
+			header:{
+				'Accept': 'application/json',
+				'Content-type': 'application/json'
+			},
+			body:JSON.stringify({
+				name: input,
+				timestamp: Date().toLocaleString()
+			})
+			
+		})
+		.then((response) => response.json())
+			.then((responseJson) =>{
+				alert(responseJson);
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+      
+		
+	}
+
 
 export default App;
 //https://reactnative.dev/docs/getting-started/
