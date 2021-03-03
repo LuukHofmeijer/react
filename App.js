@@ -95,7 +95,7 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const CodeScreen = ({ navigation, route }) => {
-const [text, setText] = useState('');
+  const [text, setText] = useState('');
 
   return (
     <View>
@@ -174,7 +174,7 @@ const registerCode = ( input ) =>{
 		
 			
 		
-		fetch('https://assinkat.000webhostapp.com/react/register.php', {
+		fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
 			method: 'post',
 			header:{
 				'Accept': 'application/json',
