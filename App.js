@@ -18,7 +18,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import styles from './components/stylesheet';
 import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
-import icon from './assets/icon.png'; 
+import icon from './assets/plattegrond.png'; 
 
 // Hierin staan alle schermen verzameld
 const Stack = createStackNavigator();
@@ -147,6 +147,7 @@ class Test extends React.Component {
   }
   render() {
     return (
+      /*
       <div>
               <QrReader
           delay={300}
@@ -155,6 +156,8 @@ class Test extends React.Component {
           style={{ width: '100%' }}
         />
 </div>
+*/
+null
     )
   }
 }
@@ -170,9 +173,9 @@ const QRScreen = ({ navigation, route }) => {
 
 
 const registerCode = ( input ) =>{
-		alert(parseInt(input));
+    alert(parseInt(input));
 		
-			
+		
 		
 		fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
 			method: 'post',
@@ -181,7 +184,7 @@ const registerCode = ( input ) =>{
 				'Content-type': 'application/json'
 			},
 			body:JSON.stringify({
-				name: input,
+				code: input,
 				timestamp: Date().toLocaleString()
 			})
 			
