@@ -1,5 +1,30 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+//echo "Connected";
  
+ // PROCESS INPUT
+ $Received_JSON = file_get_contents('php://input');
+ 
+ $obj = json_decode($Received_JSON,true);
+ 
+ $code = $obj['code'];
+ 
+ $timestamp = $obj['timestamp'];
+ 
+ // CONNECT TO DATABASE
+ $con = new mysqli($HostName,$HostUser,$HostPass,$DatabaseName);
+ 
+ if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+ }
+ 
+ $SelectSQL = "SELECT * FROM Scans";
+ 
+ $check = mysqli_fetch_array(mysqli_query($con,$SelectSQL));
+ 
+ echo json_encode($check);
+ 
+ /*
  //Put your own hosting server HOST name here.
  $HostName = "localhost";
  
@@ -13,7 +38,13 @@
  $HostPass = "P@ssword1234";
  
  // Creating connection.
- $con = mysqli_connect($HostName,$HostUser,$HostPass,$DatabaseName);
+ $con = new mysqli($HostName,$HostUser,$HostPass,$DatabaseName);
+ 
+ if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+ }
+ 
+ echo "Connected succesfully";
  
  // Getting the received JSON into $Received_JSON variable.
  $Received_JSON = file_get_contents('php://input');
@@ -22,19 +53,18 @@
  $obj = json_decode($Received_JSON,true);
  
  // Populate User name from JSON $obj array and store into $user_name variable.
- $user_name = $obj['user_name'];
+ $code = $obj['code'];
  
- // Populate User email from JSON $obj array and store into $user_email variable.
- $user_email = $obj['user_email'];
- 
- // Populate Password from JSON $obj array and store into $user_password variable.
- $user_password = $obj['user_password'];
+ // Populate User email from JSON $obj array and store into $user_email variable. Nu met timestamp
+ $timestamp = $obj['timestamp'];
  
  //Checking User entered Email is already exist or not in MySQL database using SQL query.
- $CheckSQL = "SELECT * FROM user_data_table WHERE user_email='$user_email'";
+ $CheckSQL = "SELECT * FROM Scans";
  
  // Executing SQL Query.
  $check = mysqli_fetch_array(mysqli_query($con,$CheckSQL));
+ 
+ echo $check;
  
 if(isset($check)){
  
@@ -71,5 +101,9 @@ if(isset($check)){
  
  }
  }
+ 
+ */
  mysqli_close($con);
+ 
+ 
 ?>

@@ -18,9 +18,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import styles from './components/stylesheet';
 import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
-import icon from './assets/plattegrond.png'; 
+import icon from './assets/plattegrond.png';
 
-// Hierin staan alle schermen verzameld
+// SCREENS
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -54,6 +54,7 @@ const App = () => {
   );
 };
 
+// HOMESCREEN
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.view}>
@@ -94,20 +95,20 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+// CODESCREEN
 const CodeScreen = ({ navigation, route }) => {
   const [text, setText] = useState('');
-
   return (
     <View>
-      <TextInput 
-      placeholder="type" 
-      keyboardType={'numeric'}
-      onChangeText = {text => setText(text)}
-       />
+      <TextInput
+        placeholder="type"
+        keyboardType={'numeric'}
+        onChangeText={(text) => setText(text)}
+        onSubmitEditing={() => registerCode(text)}
+      />
       <Button
         title="Bevestig"
         color="orange"
-        
         onPress={() => registerCode(text)}
       />
       <Button
@@ -119,32 +120,39 @@ const CodeScreen = ({ navigation, route }) => {
   );
 };
 
+// PLATTEGRONDSCREEN
 const PlattegrondScreen = ({ navigation, route }) => {
-  return(
+  return (
     <View style={styles.container}>
-      <Image source={icon} style={{ width: 305, height: 159 }} /> 
-
+      <Image source={icon} style={{ width: 305, height: 159 }} />
     </View>
-  )
-}
+  );
+};
 
+// QRSCREEN
+const QRScreen = ({ navigation, route }) => {
+  return (
+    <View>
+      <Test />
+    </View>
+  );
+};
 
 class Test extends React.Component {
-
   state = {
-    result: 'No result'
-  }
+    result: 'No result',
+  };
 
-  handleScan = data => {
+  handleScan = (data) => {
     if (data) {
       this.setState({
-        result: data
-      })
+        result: data,
+      });
     }
-  }
-  handleError = err => {
-    console.error(err)
-  }
+  };
+  handleError = (err) => {
+    console.error(err);
+  };
   render() {
     return (
       /*
@@ -157,49 +165,48 @@ class Test extends React.Component {
         />
 </div>
 */
-null
-    )
+      null
+    );
   }
 }
 
-const QRScreen = ({ navigation, route }) => {
-  return (
-    <View>
-      <Test />
-    </View>
-  );
+const registerCode = (input) => {
+  alert(parseInt(input));
+  /*
+		fetch('https://assinkat.000webhostapp.com/react/example.json', {
+      method: "GET",
+      //mode: 'no-cors'
+    })
+    .then(response => response.json()
+  .then(data => console.log(data)))
+    .catch((error)=>{
+      alert(error);
+      console.error(error);
+    });
+*/
+
+  fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
+    method: 'post',
+    //mode: 'no-cors',
+    header: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      code: input,
+      timestamp: Date().toLocaleString(),
+    }),
+  })
+    .then((response) => {
+      //console.log(response);
+      response.json().then((data) => console.log(data));
+      alert('1');
+    })
+    .catch((error) => {
+      alert('3' + error);
+      console.error(error);
+    });
 };
-
-
-
-const registerCode = ( input ) =>{
-    alert(parseInt(input));
-		
-		
-		
-		fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
-			method: 'post',
-			header:{
-				'Accept': 'application/json',
-				'Content-type': 'application/json'
-			},
-			body:JSON.stringify({
-				code: input,
-				timestamp: Date().toLocaleString()
-			})
-			
-		})
-		.then((response) => response.json())
-			.then((responseJson) =>{
-				alert(responseJson);
-			})
-			.catch((error)=>{
-				console.error(error);
-			});
-      
-		
-	}
-
 
 export default App;
 //https://reactnative.dev/docs/getting-started/
