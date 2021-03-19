@@ -184,13 +184,14 @@ const registerCode = (input) => {
       console.error(error);
     });
 */
+//FETCH RETURNS HTML, INSTEAD OF JSON WHEN MAKING CONNECTION TO THE DATABASE, RESEARCH!
 
   fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
     method: 'post',
     //mode: 'no-cors',
     header: {
-      Accept: 'application/json',
       'Content-type': 'application/json',
+      'Accept': 'application/json'
     },
     body: JSON.stringify({
       code: input,
@@ -198,10 +199,10 @@ const registerCode = (input) => {
     }),
   })
     .then((response) => {
-      //console.log(response);
-      response.json().then((data) => console.log(data));
-      alert('1');
+        console.log(response.ok);
+        response.text(); 
     })
+    .then(response => console.log(response))
     .catch((error) => {
       alert('3' + error);
       console.error(error);
