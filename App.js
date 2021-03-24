@@ -10,10 +10,10 @@ import {
   TextInput,
   SectionList,
   Component,
+  RefreshControl,
 } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Dimensions } from 'react-native';
 
 // Import eigen files binnen het project
 import styles from './components/stylesheet';
@@ -21,9 +21,13 @@ import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
 import icon from './assets/plattegrond.png';
 
-//Variables
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+let listData = [{
+            title: '--Uren--',
+            data: [
+              'nog geen uren gekregen'
+            ],
+          },
+        ];
 
 // SCREENS
 const Stack = createStackNavigator();
@@ -59,8 +63,27 @@ const App = () => {
   );
 };
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 // HOMESCREEN
 const HomeScreen = ({ navigation }) => {
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getRegistered();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', () => {
+      onRefresh();
+    });
+  });
+  
   return (
     <View style={styles.view}>
       <Button
@@ -73,28 +96,25 @@ const HomeScreen = ({ navigation }) => {
         color="black"
         onPress={() => navigation.navigate('Plattegrond', { name: 'Jan' })}
       />
+      <Button
+        title="Refresh"
+        color="blue"
+        onPress={onRefresh}
+      />
 
       <SectionList
-        sections={[
-          { title: '01-01-2021', data: ['4', 'Dan', 'Dominic'] },
-          {
-            title: '03-01-2021',
-            data: [
-              'Jackson',
-              'James',
-              'Jillian',
-              'Jimmy',
-              'Joel',
-              'John',
-              'Julie',
-            ],
-          },
-        ]}
+        sections={listData}
         renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
         renderSectionHeader={({ section }) => (
           <Text style={styles.sectionHeader}>{section.title}</Text>
         )}
         keyExtractor={(item, index) => index}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       />
     </View>
   );
@@ -114,7 +134,7 @@ const CodeScreen = ({ navigation, route }) => {
       <Button
         title="Bevestig"
         color="orange"
-        onPress={() => registerCode(text)}
+        onPress={() => { registerCode(text); navigation.navigate('Home'); }}
       />
       <Button
         title="QR-code"
@@ -129,7 +149,7 @@ const CodeScreen = ({ navigation, route }) => {
 const PlattegrondScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Image source={icon} style={{ width: windowWidth, height: windowHeight }} />
+      <Image source={icon} style={{ width: 305, height: 159 }} />
     </View>
   );
 };
@@ -176,7 +196,7 @@ class Test extends React.Component {
 }
 
 const registerCode = (input) => {
-  alert(parseInt(input));
+  //alert(parseInt(input));
   /*
 		fetch('https://assinkat.000webhostapp.com/react/example.json', {
       method: "GET",
@@ -189,8 +209,8 @@ const registerCode = (input) => {
       console.error(error);
     });
 */
-//FETCH RETURNS HTML, INSTEAD OF JSON WHEN MAKING CONNECTION TO THE DATABASE, RESEARCH!
-
+  let d = new Date();
+  
   fetch('https://assinkat.000webhostapp.com/react/registratie.php', {
     method: 'post',
     //mode: 'no-cors',
@@ -200,19 +220,55 @@ const registerCode = (input) => {
     },
     body: JSON.stringify({
       code: input,
-      timestamp: Date().toLocaleString(),
+      date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+      time: `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
     }),
   })
-    .then((response) => {
-        console.log(response.ok);
-        response.text(); 
+    .then(response => response.json())
+    .then(response => alert(response))
+    .catch(error => console.error(error));
+};
+
+const getRegistered = () => {
+  /*
+		fetch('https://assinkat.000webhostapp.com/react/example.json', {
+      method: "GET",
+      //mode: 'no-cors'
     })
-    .then(response => console.log(response))
+    .then(response => response.json()
+  .then(data => console.log(data)))
+    .catch((error)=>{
+      alert(error);
+      console.error(error);
+    });
+*/
+  
+  fetch('https://assinkat.000webhostapp.com/react/get-all.php', {
+    method: 'post',
+    //mode: 'no-cors',
+    header: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      action: 'get-all'
+    }),
+  })
+    .then(response => response.json())
+    .then(response => { console.log(response); setRegisteredList(response); })
     .catch((error) => {
-      alert('3' + error);
       console.error(error);
     });
 };
+
+const setRegisteredList = (data) => {
+  listData[0].data = [];
+  for (let i = 0; i < data.length; i++) {
+    listData[0].data[i] = data[i].join(' - ');
+  }
+
+  console.log(listData);
+}
 
 export default App;
 //https://reactnative.dev/docs/getting-started/

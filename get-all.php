@@ -9,11 +9,8 @@ header('Content-Type: application/json');
  
  $obj = json_decode($Received_JSON,true);
  
- $code = $obj['code'];
- 
- $date = $obj['date'];
- 
- $time = $obj['time'];
+ $action = $obj['action'];
+
  
  //Put your own hosting server HOST name here.
  $HostName = "localhost";
@@ -37,15 +34,9 @@ header('Content-Type: application/json');
  
  $SelectSQL = "SELECT * from Scans";
  
- $InsertSQL =  "INSERT INTO Scans values ('$code', '134000', '$date', '$time')";
-
- if (mysqli_query($con,$InsertSQL)) {
-     echo json_encode("AT-uur succesvol");
- }
+ $check = mysqli_fetch_all(mysqli_query($con,$SelectSQL));
  
- //$check = mysqli_fetch_all($query);
- 
- //echo json_encode($date);
+ echo json_encode($check);
  
 
  /*
