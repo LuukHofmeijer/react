@@ -13,12 +13,17 @@ import {
 } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Dimensions } from 'react-native';
 
 // Import eigen files binnen het project
 import styles from './components/stylesheet';
 import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
 import icon from './assets/plattegrond.png';
+
+//Variables
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 // SCREENS
 const Stack = createStackNavigator();
@@ -124,7 +129,7 @@ const CodeScreen = ({ navigation, route }) => {
 const PlattegrondScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Image source={icon} style={{ width: 305, height: 159 }} />
+      <Image source={icon} style={{ width: windowWidth, height: windowHeight }} />
     </View>
   );
 };
