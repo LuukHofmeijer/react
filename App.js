@@ -11,6 +11,7 @@ import {
   SectionList,
   Component,
   RefreshControl,
+  Dimensions
 } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,6 +21,9 @@ import styles from './components/stylesheet';
 import mainTheme from './components/mainTheme';
 import QrReader from './qr/index';
 import icon from './assets/plattegrond.png';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 let listData = [{
             title: '--Uren--',
@@ -149,7 +153,7 @@ const CodeScreen = ({ navigation, route }) => {
 const PlattegrondScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Image source={icon} style={{ width: 305, height: 159 }} />
+      <Image source={icon} style={{ width: windowWidth, height: windowHeight }} />
     </View>
   );
 };

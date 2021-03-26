@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -23,9 +26,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
-    width: 50,
-    height: 100,
-    justifyContent: 'center'
+    width: windowWidth,
+    height: windowHeight,
+    justifyContent: 'Center'
   }
 });
 
