@@ -5,7 +5,10 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-  container: {
+  qrcamera: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   paragraph: {
     margin: 24,
@@ -15,20 +18,30 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 50,
-      backgroundColor: '#00aeef',
+      backgroundColor: '#0bf',
       borderColor: 'red',
       borderWidth: 5,
       borderRadius: 15       
    },
-  view: {
+  body: {
     flex: 1,
-    justifyContent: 'center',
     padding: 20
+  },
+  item: {
+    backgroundColor: '#ffc',
+    padding: 15,
+    margin: 3
   },
   image: {
     width: windowWidth,
     height: windowHeight,
-    justifyContent: 'Center'
+    justifyContent: 'center'
+  },
+  sectionHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 5
   }
 });
 
